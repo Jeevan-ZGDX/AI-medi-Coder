@@ -1,0 +1,119 @@
+Design and generate a Digital Registry System that uses Ethereum blockchain (or a low-cost L2 like Polygon) to store tamper-proof document proofs (hashes), while original documents are stored off-chain (IPFS/S3).
+
+Scope — Top 10 Features to Implement
+
+User Registration + Authentication (Hybrid)
+
+Support both Web3 wallet login (MetaMask/WalletConnect) and email/password with 2FA.
+
+Document Upload & Hashing
+
+Compute keccak256 hash for each uploaded file.
+
+Store original file in IPFS/S3.
+
+Only hash + minimal metadata goes on-chain.
+
+Ethereum Smart Contract (Registry)
+
+Store {recordId, recordHash, subject, registrar, timestamp, optional CID}.
+
+Role-based access (Admin, Registrar, Verifier).
+
+Events: RecordRegistered, RecordRevoked.
+
+Verification Portal / API
+
+Public page/API where anyone can verify a document by uploading it, entering recordId, or scanning QR.
+
+QR Code Integration
+
+Generate QR codes that link directly to verification page.
+
+Audit Logs & Monitoring
+
+Track all registrations, verifications, and admin actions.
+
+Provide immutable logs for compliance.
+
+Notifications (Email/SMS/Push)
+
+Send alerts for successful registration, verification attempts, or suspicious activity.
+
+Searchable Index (The Graph / Database)
+
+Index blockchain events for fast search by recordId, subject, registrar, or date.
+
+Role-based Access Control (RBAC)
+
+Admin: manage roles, revoke, pause.
+
+Registrar: upload & register.
+
+Verifier: read-only access.
+
+Merkle Batch Anchoring (Scalability)
+
+Allow batch submissions: compute Merkle root of many hashes → store root on-chain.
+
+Off-chain service provides Merkle proofs for each document.
+
+Deliverables
+
+System Architecture
+
+High-level diagram of components (frontend, backend, blockchain, storage, indexer).
+
+Data flow for registration, storage, verification.
+
+Tech stack recommendation.
+
+Smart Contract (Solidity + OpenZeppelin)
+
+Contract with role-based access, record registration, revocation, pause/unpause.
+
+Events for indexing.
+
+Functionality for both single records and Merkle batch anchoring.
+
+Backend API (Node.js/Express or NestJS)
+
+Endpoints: /upload, /records, /verify/:id.
+
+File validation, hash computation, IPFS upload, JWT authentication.
+
+Audit logs and notifications integration.
+
+Frontend (React + Tailwind)
+
+Pages: Dashboard, Register Record, Verify Record, Record Details, Admin Panel.
+
+Components: RegisterRecord (file upload → hash preview → sign & submit), VerifyRecord (upload/check hash), QR code generator.
+
+Indexer/Search
+
+Use The Graph (or custom worker with ethers.js) to listen to contract events.
+
+Expose GraphQL/REST API for searching records.
+
+Implementation Notes
+
+How to handle hybrid authentication.
+
+How to compute deterministic recordId.
+
+How to integrate notifications (e.g., SendGrid, Twilio, Firebase).
+
+How to implement audit logs (immutable DB or append-only logs).
+
+Output Format
+
+Provide step-by-step architecture explanation.
+
+Include Solidity code snippets for the registry contract.
+
+Provide backend API examples (Express/NestJS).
+
+Provide React component snippets (TypeScript + Tailwind).
+
+Suggest deployment instructions (Hardhat, Infura/Alchemy, The Graph, IPFS).
